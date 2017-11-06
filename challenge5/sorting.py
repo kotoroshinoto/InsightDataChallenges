@@ -120,15 +120,17 @@ class CleandAndSortTestCases(unittest.TestCase):
 
 @click.command()
 @click.option('--test/--no-test', default=False, help='run unit tests')
-@click.argument('inpath', type=click.File('r'), default=open('list.txt', 'r'))
-@click.argument('outpath', type=click.File('w'), default=open('result.txt', 'w'))
+@click.argument('inpath', type=click.Path(file_okay=True, dir_okay=False, readable=True, resolve_path=True), default='list.txt')
+@click.argument('outpath', type=click.Path(file_okay=True, dir_okay=False, writable=True, resolve_path=True), default='result.txt')
 def cli(inpath, outpath, test):
     if test:
-        unittest.main(argv=['ignore me'])
-    line = next(inpath).rstrip()
-    words = line.split()
-    cleaned_and_sorted_words = clean_and_sort(words)
-    print(" ".join(cleaned_and_sorted_words), file=outpath)
+        unittest.main(argv=['ignore me'], verbosity=2)
+    with open(inpath, 'r') as infile:
+        line = next(infile).rstrip()
+        words = line.split()
+        cleaned_and_sorted_words = clean_and_sort(words)
+        with open(outpath, 'w') as outfile:
+            print(" ".join(cleaned_and_sorted_words), file=outfile)
 
 
 if __name__ == '__main__':
