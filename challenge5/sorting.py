@@ -65,8 +65,7 @@ def clean_and_sort(words: 'List'):
     return sort_words(cleaned)
 
 
-class CleandAndSortTestCases(unittest.TestCase):
-
+class CleaningTestCases(unittest.TestCase):
     def test_word_clean_text(self):
         word = '---!@a#$p%^p&*l()_e+*/'
         expected = 'apple'
@@ -82,6 +81,8 @@ class CleandAndSortTestCases(unittest.TestCase):
         expected = '-1000'
         self.assertEqual(clean_word(word), expected)
 
+
+class CleanAndSortTestCasesCLEAN(unittest.TestCase):
     def test_clean_input_ints(self):
         test_input = ['1000', '25', '32', '100', '1', '9', '-1']
         expected = ['-1', '1', '9', '25', '32', '100', '1000']
@@ -97,6 +98,23 @@ class CleandAndSortTestCases(unittest.TestCase):
         expected = ['12', 'bird', 'cat', '20', 'dog']
         self.assertEqual(clean_and_sort(test_input), expected)
 
+    def test_one_clean_item_text(self):
+        test_input = ['derpasaurus']
+        expected = ['derpasaurus']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_clean_item_int(self):
+        test_input = ['20']
+        expected = ['20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_clean_negative_item_int(self):
+        test_input = ['-20']
+        expected = ['-20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+
+class CleanAndSortTestCasesDIRTY(unittest.TestCase):
     def test_dirty_input_ints(self):
         test_input = ['1&0&0)0', '2}5', '3{2', '1*0*0', '*1&', '!@#9', '-1%^&']
         expected = ['-1', '1', '9', '25', '32', '100', '1000']
@@ -112,24 +130,9 @@ class CleandAndSortTestCases(unittest.TestCase):
         expected = ['12', 'bird', 'cat', '20', 'dog']
         self.assertEqual(clean_and_sort(test_input), expected)
 
-    def test_empty_input(self):
-        test_input = []
-        expected = []
-        self.assertEqual(clean_and_sort(test_input), expected)
-
-    def test_one_clean_item_text(self):
-        test_input = ['derpasaurus']
-        expected = ['derpasaurus']
-        self.assertEqual(clean_and_sort(test_input), expected)
-
     def test_one_dirty_item_text(self):
         test_input = ['de$%^rpa^saurus']
         expected = ['derpasaurus']
-        self.assertEqual(clean_and_sort(test_input), expected)
-
-    def test_one_clean_item_int(self):
-        test_input = ['20']
-        expected = ['20']
         self.assertEqual(clean_and_sort(test_input), expected)
 
     def test_one_dirty_item_int(self):
@@ -137,14 +140,17 @@ class CleandAndSortTestCases(unittest.TestCase):
         expected = ['20']
         self.assertEqual(clean_and_sort(test_input), expected)
 
-    def test_one_clean_negative_item_int(self):
-        test_input = ['-20']
-        expected = ['-20']
-        self.assertEqual(clean_and_sort(test_input), expected)
-
     def test_one_dirty_negative_item_int(self):
         test_input = ['--2$#0']
         expected = ['-20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+
+class CleanAndSortTestCasesEMPTY(unittest.TestCase):
+
+    def test_empty_input(self):
+        test_input = []
+        expected = []
         self.assertEqual(clean_and_sort(test_input), expected)
 
 
