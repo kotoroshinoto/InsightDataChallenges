@@ -1,6 +1,8 @@
 from typing import List
 import unittest
 from collections import deque
+import click
+
 
 def sort_words(words: 'List[str]'):
     # save "type" at each position into a list
@@ -101,5 +103,18 @@ class CleandAndSortTestCases(unittest.TestCase):
         self.assertEqual(clean_and_sort(test_input), expected)
 
 
+@click.command()
+@click.option('--test/--no-test', default=False, help='run unit tests')
+@click.argument('inpath', type=click.File('r'), default=open('list.txt', 'r'))
+@click.argument('outpath', type=click.File('w'), default=open('result.txt', 'w'))
+def cli(inpath, outpath, test):
+    if test:
+        unittest.main(argv=['ignore me'])
+    line = next(inpath).rstrip()
+    words = line.split()
+    cleaned_and_sorted_words = clean_and_sort(words)
+    print(" ".join(cleaned_and_sorted_words), file=outpath)
+
+
 if __name__ == '__main__':
-    unittest.main()
+    cli()
