@@ -117,6 +117,36 @@ class CleandAndSortTestCases(unittest.TestCase):
         expected = []
         self.assertEqual(clean_and_sort(test_input), expected)
 
+    def test_one_clean_item_text(self):
+        test_input = ['derpasaurus']
+        expected = ['derpasaurus']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_dirty_item_text(self):
+        test_input = ['de$%^rpa^saurus']
+        expected = ['derpasaurus']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_clean_item_int(self):
+        test_input = ['20']
+        expected = ['20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_dirty_item_int(self):
+        test_input = ['2$#0']
+        expected = ['20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_clean_negative_item_int(self):
+        test_input = ['-20']
+        expected = ['-20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
+    def test_one_dirty_negative_item_int(self):
+        test_input = ['--2$#0']
+        expected = ['-20']
+        self.assertEqual(clean_and_sort(test_input), expected)
+
 
 @click.command()
 @click.option('--test/--no-test', default=False, help='run unit tests')
