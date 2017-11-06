@@ -35,7 +35,7 @@ def clean_word(word: 'str'):
     #rule for identifying an int: after all dirty content is removed, only digits remain
     minus_before_digit = False
     saw_digit = False
-    w=''
+    w = ''
     for c in word:
         if c == '-' and not saw_digit:
             minus_before_digit = True
@@ -66,6 +66,21 @@ def clean_and_sort(words: 'List'):
 
 
 class CleandAndSortTestCases(unittest.TestCase):
+
+    def test_word_clean_text(self):
+        word = '---!@a#$p%^p&*l()_e+*/'
+        expected = 'apple'
+        self.assertEqual(clean_word(word), expected)
+
+    def test_word_clean_int_positive(self):
+        word = '!@#1$%^0&*0()_0+*/'
+        expected = '1000'
+        self.assertEqual(clean_word(word), expected)
+
+    def test_word_clean_int_negative(self):
+        word = '---!-@-#1$0%0^0&*()_+*/'
+        expected = '-1000'
+        self.assertEqual(clean_word(word), expected)
 
     def test_clean_input_ints(self):
         test_input = ['1000', '25', '32', '100', '1', '9', '-1']
